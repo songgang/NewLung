@@ -43,7 +43,7 @@ do
 					fi
 					
 
-					tmpdir=/dev/shm/songgang/$patient/$imgname
+					tmpdir=/dev/shm/songgang-dcm2nii/$patient/$imgname
 					echo target tmpdir $tmpdir
 					if [ ! -d $tmpdir ]; then 
 						mkdir -p $tmpdir 
@@ -52,6 +52,7 @@ do
 					fi
 					echo cleaned $tmpdir
 
+					# main conversion here:
 					$DCM2NII -b $DCMINI -o $tmpdir $dicomdir
 
 					niicnt=`ls $tmpdir/*.nii.gz | wc -l`
@@ -77,7 +78,7 @@ do
 					echo removed $tmpdir
 
 				else
-					echo Less than 2 .dcm files. Skip!!!!!!!!!!!!!!!!!!!!!!
+					echo broken: No 2 .dcm files. Skip!!!!!!!!!!!!!!!!!!!!!!
 				fi
 				break
 			done
@@ -87,7 +88,9 @@ do
 			echo broken: bad directory without proper files: $a1
 			echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	fi
-done;
+done
 
+rm -rf /dev/shm/songgang-dcm2nii
+echo removed /dev/shm/songgang-dcm2nii
 
 # /home/songgang/pkg/mricron/dcm2nii -b /home/songgang/project/EduardoNewData/script/Edudcm2nii.ini -o /dev/shm  /home/songgang/project/EduardoNewData/data/input/DICOM/download20140223193851/CT_N2E/79069544/43105272
