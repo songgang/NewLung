@@ -53,7 +53,7 @@ do
 					echo cleaned $tmpdir
 
 					$DCM2NII -b $DCMINI -o $tmpdir $dicomdir
-					
+
 					niicnt=`ls $tmpdir/*.nii.gz | wc -l`
 					if [ $niicnt == 1 ]; then
 						tmpniifile=`ls $tmpdir/*.nii.gz`
@@ -66,7 +66,8 @@ do
 						fi 
 						mv $tmpniifile $dstniifile
 						echo moved to $dstniifile
-						ls -hl $distniifile
+						echo check $dstniifile
+						ls -hl $dstniifile
 					else
 						echo broken: found $niicnt .nii.gz files in $tmpdir
 						echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
