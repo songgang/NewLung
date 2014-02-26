@@ -11,7 +11,7 @@ DCMINI=/home/songgang/project/EduardoNewData/script/Edudcm2nii.ini
 #nii direcotry
 # NIIROOT/N2/N2E
 
-DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM
+DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/pg1
 NIIROOT=/home/songgang/project/EduardoNewData/data/input/nii
 
 for dcmA in `ls -d $DICOMROOT/download*`
@@ -27,6 +27,7 @@ do
 		imgname=`echo $a | sed -n 's/^CT_\(.*[0-9]\+[E|I]$\)/\1/p'`
 		echo found patient: $patient
 		echo found imgname: $imgname
+
 		for b in `ls -d $a1/*`
 		do
 			for c in `ls -d $b/*`
@@ -35,13 +36,14 @@ do
 				echo found dicomdir: $c
 				dcmcnt=`ls $c/*.dcm | wc -l`
 				echo found total $dcmcnt .dcm files
-				if [ $dcmcnt > 0 ]; then
+
+				if (( $dcmcnt > 0 )); then
+
 					niidir=$NIIROOT/$patient/$imgname
 					echo target niidir: $niidir
 					if [ ! -d $niidir ]; then 
 						mkdir -p $niidir
 					fi
-					
 
 					tmpdir=/dev/shm/songgang-dcm2nii/$patient/$imgname
 					echo target tmpdir $tmpdir
@@ -54,6 +56,7 @@ do
 
 					# main conversion here:
 					$DCM2NII -b $DCMINI -o $tmpdir $dicomdir
+					# touch $tmpdir/N2Etouch.nii.gz
 
 					niicnt=`ls $tmpdir/*.nii.gz | wc -l`
 					if [ $niicnt == 1 ]; then
@@ -88,6 +91,7 @@ do
 			echo broken: bad directory without proper files: $a1
 			echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	fi
+	break
 done
 
 rm -rf /dev/shm/songgang-dcm2nii
