@@ -11,7 +11,7 @@ DCMINI=/home/songgang/project/EduardoNewData/script/Edudcm2nii.ini
 #nii direcotry
 # NIIROOT/N2/N2E
 
-DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/pg1
+DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/pg2
 NIIROOT=/home/songgang/project/EduardoNewData/data/input/nii
 
 for dcmA in `ls -d $DICOMROOT/download*`
@@ -21,10 +21,10 @@ do
 
 	a1=`ls -d $dcmA/CT_*`
 	a=`basename $a1`
-	if [[ $a =~ ^CT_.*[0-9]+[E|I]$ ]]; then
+	if [[ $a =~ ^CT_.*[0-9]+.+$ ]]; then
 		# echo "CT_N2E" | sed -n 's/CT_\(.*[0-9]\+\)[E|I]/\1/p'
-		patient=`echo $a | sed -n 's/^CT_\(.*[0-9]\+\)[E|I]$/\1/p'`
-		imgname=`echo $a | sed -n 's/^CT_\(.*[0-9]\+[E|I]$\)/\1/p'`
+		patient=`echo $a | sed -n 's/^CT_\(.*[0-9]\+\).\+$/\1/p'`
+		imgname=`echo $a | sed -n 's/^CT_\(.*[0-9]\+.\+$\)/\1/p'`
 		echo found patient: $patient
 		echo found imgname: $imgname
 
