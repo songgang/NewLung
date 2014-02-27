@@ -91,7 +91,6 @@ do
 			echo broken: bad directory without proper files: $a1
 			echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	fi
-	break
 done
 
 rm -rf /dev/shm/songgang-dcm2nii
