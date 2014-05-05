@@ -38,7 +38,7 @@ function register_old_ants()
   nm1=` basename $f | cut -d '.' -f 1 `
   nm2=` basename $m | cut -d '.' -f 1 `
 
-  reg=${AP}/ANTS           # path to antsRegistration
+  reg=${AP}/ANTS
   
   
   nm=$OUTPUTDIR/${nm1}_fixed_${nm2}_moving_${casename}   # construct output prefix
