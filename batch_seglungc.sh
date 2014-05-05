@@ -41,16 +41,18 @@ do
         echo image: $myimg
      
         
-        LUNGIMG=$dbroot/$mydate/$myimg/$myimg'.nii.gz'
-        LUNGNAME=$myimg
+        # LUNGIMG=$dbroot/$mydate/$myimg/$myimg'.nii.gz'
+
+        LUNGNAME=$myimg'_downsampled'
+        LUNGIMG=$dbroot/$mydate/$myimg/$myimg'_downsampled.nii.gz'       
         RESDIR=$RESROOT/$myimg
-        LUNGMASK=$RESDIR/$myimg'_smooth.nii.gz'
-        TMPDIR=$RESDIR/$myimg
+        LUNGMASK=$RESDIR/$LUNGNAME'_smooth.nii.gz'
         
-        if [ ! -f $IMG ]; then echo $IMG does not exist!; continue; fi
+        if [ ! -f $LUNGIMG ]; then echo $LUNGIMG does not exist!; continue; fi
         
         make_metric_dir $RESDIR		
-        qsub -S /bin/bash -N ${LUNGNAME}_seglungc -wd $RESDIR seglungc.sh $LUNGIMG $RESDIR $LUNGMASK $LUNGNAME
+        qsub -S /bin/bash -N ${LUNGNAME}_seglungc -j y -wd $RESDIR seglungc.sh $LUNGIMG $RESDIR $LUNGMASK $LUNGNAME
+        break
     done
 done
 }
