@@ -52,7 +52,7 @@ do
         
         make_metric_dir $RESDIR		
         qsub -S /bin/bash -N ${LUNGNAME}_seglungc -j y -wd $RESDIR seglungc.sh $LUNGIMG $RESDIR $LUNGMASK $LUNGNAME
-        break
+        
     done
 done
 }
