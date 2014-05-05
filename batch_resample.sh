@@ -40,7 +40,7 @@ do
         if [ ! -f $LUNGIMG ]; then echo $LUNGIMG does not exist!; continue; fi
         
         make_metric_dir $RESDIR		
-        qsub -S /bin/bash -N ${LUNGNAME}_resample -wd $RESDIR resample.sh $LUNGIMG $RESIMG
+        qsub -S /bin/bash -N ${myimg}_resample -wd $RESDIR resample.sh $LUNGIMG $RESIMG
 
     done
 done
