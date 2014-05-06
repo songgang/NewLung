@@ -43,8 +43,11 @@ do
         
         # LUNGIMG=$dbroot/$mydate/$myimg/$myimg'.nii.gz'
 
-        LUNGNAME=$myimg'_downsampled'
-        LUNGIMG=$dbroot/$mydate/$myimg/$myimg'_downsampled.nii.gz'       
+        # LUNGNAME=$myimg'_downsampled'
+        # LUNGIMG=$dbroot/$mydate/$myimg/$myimg'_downsampled.nii.gz'       
+        LUNGNAME=$myimg'_down1p5mm'
+
+        LUNGIMG=/home/songgang/project/EduardoNewData/data/output/$myimg/$LUNGNAME'.nii.gz'       
         RESDIR=$RESROOT/$myimg
         LUNGMASK=$RESDIR/$LUNGNAME'_smooth.nii.gz'
         
