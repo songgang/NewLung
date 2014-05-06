@@ -60,7 +60,8 @@ do
         make_metric_dir $RESDIR
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
-        qsub -pe serial 4 -S /bin/bash -N ${fixname}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        #new ants, serial 4 not enough, increase to 7
+        qsub -pe serial 7 -S /bin/bash -N ${fixname}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
