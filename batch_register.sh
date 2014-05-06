@@ -67,7 +67,7 @@ do
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
         # 1.5mm resolution try 2G
-        qsub -pe serial 1 -S /bin/bash -N ${fixname}_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        qsub -pe serial 1 -S /bin/bash -N ${fixname}_1p5mm_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
