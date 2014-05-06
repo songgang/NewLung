@@ -69,7 +69,7 @@ function register_new_ants()
     -f 8x6x4x2x1 -l 1 \
     -m CC[  $f, $m , 1 , 2 ] \
      -t SyN[ .25, 6, 0 ] \
-     -c [ 200x200x200x200x200x10,0,5 ]  \
+     -c [ 400x400x400x400x400x20,0,5 ]  \
     -s 6x4x3x2x1x1vox  \
     -f 12x8x6x4x2x1 -l 1 -u 1 -z 1 \
    -o ${nm}

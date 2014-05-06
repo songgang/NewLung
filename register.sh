@@ -57,7 +57,7 @@ function register_old_ants()
 
   ANTS 3 -o ${nm}\
     -m CC[$f,$m,1,2]\
-    -i 200x200x200x200x50\
+    -i 400x400x400x400x50\
     -t SyN[0.25]\
     -r Gauss[6,0]\
     --initial-affine ${nm}_initaffAffine.txt\

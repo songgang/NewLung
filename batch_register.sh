@@ -1,6 +1,12 @@
 #!/bin/bash
 
 # batch script to register EduardoNewData 
+# updated: 
+# try 1.5mm
+# fix: exp
+# mov: insp
+
+# to be changed
 # fix: insp
 # mov: exp
 
@@ -37,18 +43,18 @@ do
         local movname
         local j
         let j=$i+1
-
-        fixname=`awk "{print $"$i"}" <<< $imglist`
-        movname=`awk "{print $"$j"}" <<< $imglist`
+        
+        fixname=`awk "{print $"$j"}" <<< $imglist`
+        movname=`awk "{print $"$i"}" <<< $imglist`
 
         echo ===========================================================
         echo image fix mov: $fixname $movname
 
-        FIXLUNGNAME=$fixname'_downsampled'
+        FIXLUNGNAME=$fixname'_down1p5mm'
         FIXLUNGIMG=$RESROOT/$fixname/$FIXLUNGNAME'.nii.gz'
         FIXLUNGMASK=$RESROOT/$fixname/$FIXLUNGNAME'_lungmask.nii.gz'
 
-        MOVLUNGNAME=$movname'_downsampled'
+        MOVLUNGNAME=$movname'_down1p5mm'
         MOVLUNGIMG=$RESROOT/$movname/$MOVLUNGNAME'.nii.gz'
         MOVLUNGMASK=$RESROOT/$movname/$MOVLUNGNAME'_lungmask.nii.gz'
 
@@ -60,7 +66,8 @@ do
         make_metric_dir $RESDIR
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
-        qsub -pe serial 4 -S /bin/bash -N ${fixname}_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        # 1.5mm resolution try 2G
+        qsub -pe serial 1 -S /bin/bash -N ${fixname}_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
