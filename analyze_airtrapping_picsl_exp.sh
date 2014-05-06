@@ -1,5 +1,11 @@
 #!/bash
 
+##
+# updated: 2014 /05/ 6
+# for Eduardo's new larger dataset
+# need to skip airways for now??
+#
+
 # mark:
 # register_maskaff was used SUCCESSFULLY to register 
 #   (use masks of lungs to initialize the affine transform)
@@ -37,7 +43,7 @@
 ##
 
 
-RESDIR=$1
+
 
 
 
@@ -111,12 +117,27 @@ function emptyecho
     echo $1
 }
 
-checkfile $RESDIR/fixed_resampled.nii.gz
-checkfile $RESDIR/moving_resampled.nii.gz
-checkfile $RESDIR/antsAffine.txt
-checkfile $RESDIR/antsInverseWarpxvec.nii.gz
-checkfile $RESDIR/fixed_airway_resampled.nii.gz
-checkfile $RESDIR/moving_mask_resampled.nii.gz
+
+FIXLUNGIMG=$1
+MOVLUNGIMG=$2
+FIXAIRWAYMASK=$5
+MOVAIRWAYMASK=$6
+RESDIR=$7
+
+WARPEDMOVLUNGIMG=$8
+
+nm1=` basename $FIXLUNGIMG | cut -d '.' -f 1 `
+nm2=` basename $MOVLUNGIMG | cut -d '.' -f 1 `
+nm=$RESDIR/${nm1}_fixed_${nm2}_moving_oldants
+
+
+
+# checkfile $RESDIR/fixed_resampled.nii.gz
+# checkfile $RESDIR/moving_resampled.nii.gz
+# checkfile $RESDIR/antsAffine.txt
+# checkfile $RESDIR/antsInverseWarpxvec.nii.gz
+# checkfile $RESDIR/fixed_airway_resampled.nii.gz
+# checkfile $RESDIR/moving_mask_resampled.nii.gz
 
 echo "have all needed files"
 
@@ -125,29 +146,52 @@ echo here
 tic 
 
 #-1 .get warped inspiration to the expiration
-MYDO $ANTSDIR/WarpImageMultiTransform 3 $RESDIR/fixed_resampled.nii.gz $RESDIR/fixed_resampled_warped.nii.gz -R $RESDIR/moving_resampled.nii.gz -i $RESDIR/antsAffine.txt $RESDIR/antsInverseWarp.nii.gz
-
+# MYDO $ANTSDIR/WarpImageMultiTransform 3 $RESDIR/fixed_resampled.nii.gz $RESDIR/fixed_resampled_warped.nii.gz -R $RESDIR/moving_resampled.nii.gz -i $RESDIR/antsAffine.txt $RESDIR/antsInverseWarp.nii.gz
+$nm'_warped.nii.gz'
 
 # 0 .get warped airway mask in the moving domain
-MYDO $ANTSDIR/WarpImageMultiTransform 3 $RESDIR/fixed_airway_resampled.nii.gz $RESDIR/moving_airway_resampled_fake.nii.gz -R $RESDIR/moving_resampled.nii.gz -i $RESDIR/antsAffine.txt $RESDIR/antsInverseWarp.nii.gz
+# MYDO $ANTSDIR/WarpImageMultiTransform 3 $RESDIR/fixed_airway_resampled.nii.gz $RESDIR/moving_airway_resampled_fake.nii.gz -R $RESDIR/moving_resampled.nii.gz -i $RESDIR/antsAffine.txt $RESDIR/antsInverseWarp.nii.gz
+
+${AP}antsApplyTransforms -d 3 -i $MOVAIRWAYMASK -r $FIXAIRWAYMASK -n linear -t ${nm}Warp.nii.gz -t ${nm}Affine.txt -o ${nm}_airwaymask_warped.nii.gz
 
 # 1. get aerated area in expiration: exclude airway and vessels
 
-MYDO $IMDILATE $RESDIR/moving_airway_resampled_fake.nii.gz 2 $RESDIR/moving_airway_resampled_fake_dilated.nii.gz
-MYDO $C3D $RESDIR/moving_airway_resampled_fake_dilated.nii.gz -o $RESDIR/moving_airway_resampled_fake_dilated.nii.gz
-MYDO $C3D $RESDIR/moving_resampled.nii.gz -threshold -300 Inf 1 0 -o $RESDIR/moving_vessel_resampled.nii.gz
-MYDO $IMDILATE $RESDIR/moving_vessel_resampled.nii.gz 2 $RESDIR/moving_vessel_resampled_dilated.nii.gz
-MYDO $C3D $RESDIR/moving_mask_resampled.nii.gz $RESDIR/moving_airway_resampled_fake_dilated.nii.gz -scale -1 -shift 1 -multiply $RESDIR/moving_vessel_resampled_dilated.nii.gz -scale -1 -shift 1 -multiply $RESDIR/moving_resampled.nii.gz -threshold -Inf -500 1 0 -multiply -o $RESDIR/moving_aeroted_mask_resampled.nii.gz
+# MYDO $IMDILATE $RESDIR/$moving_airway_resampled_fake.nii.gz 2 $RESDIR/moving_airway_resampled_fake_dilated.nii.gz
+# got a rough airway mask
+c3d $nm1'_airways.nii.gz' -threshold 4 4 1 0 -o $nm1'_roughairwaysmask.nii.gz'
 
-MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/moving_aeroted_mask_resampled.nii.gz > $RESDIR/res"-moving-aeroted-Volume.txt"
+MYDO $IMDILATE $RESDIR/$nm1'_roughairwaysmask.nii.gz' 2 $RESDIR/$nm1'_roughairwaysmask_dilated.nii.gz'
+
+# MYDO $C3D $RESDIR/moving_airway_resampled_fake_dilated.nii.gz -o $RESDIR/moving_airway_resampled_fake_dilated.nii.gz
+
+MYDO $C3D $RESDIR/$FIXLUNGIMG -threshold -300 Inf 1 0 -o $RESDIR/$nm1'_vesselmask.nii.gz'
+
+# MYDO $IMDILATE $RESDIR/moving_vessel_resampled.nii.gz 2 $RESDIR/moving_vessel_resampled_dilated.nii.gz
+MYDO $IMDILATE $RESDIR/$nm1'_vesselmask.nii.gz' 2 $RESDIR/$nm1'_vesselmask_dilated.nii.gz'
+
+
+# MYDO $C3D $RESDIR/moving_mask_resampled.nii.gz $RESDIR/moving_airway_resampled_fake_dilated.nii.gz -scale -1 -shift 1 -multiply $RESDIR/moving_vessel_resampled_dilated.nii.gz -scale -1 -shift 1 -multiply $RESDIR/moving_resampled.nii.gz -threshold -Inf -500 1 0 -multiply -o $RESDIR/moving_aeroted_mask_resampled.nii.gz
+MYDO $C3D $RESDIR/$nm1'_lungmask.nii.gz' $RESDIR/$nm1'_roughairwaysmask_dilated.nii.gz' -scale -1 -shift 1 -multiply $RESDIR/$nm1'_vesselmask_dilated.nii.gz' -scale -1 -shift 1 -multiply $RESDIR/$FIXLUNGIMG -threshold -Inf -500 1 0 -multiply -o $RESDIR/$nm1'_aerotedmask.nii.gz'
+
+
+MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/$nm1'_aerotedmask.nii.gz' > $RESDIR/res"-exp-aeroted-Volume.txt"
 
 
 #   2. emphysema area or non-emphysema with severe air trapping ( threshold < -850 ) in expiration
-MYDO $C3D $RESDIR/moving_resampled.nii.gz -threshold -Inf -850 1 0 $RESDIR/moving_aeroted_mask_resampled.nii.gz -multiply -o $RESDIR/moving_severe_resampled.nii.gz
-MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/moving_severe_resampled.nii.gz >  $RESDIR/res"-moving-severe-Volume.txt"
+# MYDO $C3D $RESDIR/moving_resampled.nii.gz -threshold -Inf -850 1 0 $RESDIR/moving_aeroted_mask_resampled.nii.gz -multiply -o $RESDIR/moving_severe_resampled.nii.gz
+MYDO $C3D $FIXLUNGIMG -threshold -Inf -850 1 0 $RESDIR/$nm1'_aerotedmask.nii.gz' -multiply -o $RESDIR/$nm1'_severe.nii.gz'
+
+# MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/moving_severe_resampled.nii.gz >  $RESDIR/res"-moving-severe-Volume.txt"
+MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/$nm1'_severe.nii.gz' >  $RESDIR/res"-exp-severe-Volume.txt"
 
 #   recompute: 2.1. emphysema area or non-emphysema with severe air trapping ( threshold < -950 ) in inspiration
-MYDO $C3D $RESDIR/fixed_resampled.nii.gz -threshold -Inf -950 1 0 $RESDIR/moving_aeroted_mask_resampled -multiply -o $RESDIR/severe_resampled.nii.gz
+# MYDO $C3D $RESDIR/fixed_resampled.nii.gz -threshold -Inf -950 1 0 $RESDIR/moving_aeroted_mask_resampled -multiply -o $RESDIR/severe_resampled.nii.gz
+# MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/severe_resampled.nii.gz >  $RESDIR/res"-severe-Volume.txt"
+
+#############todo
+## todo: needs to compute the insp lung mask
+
+MYDO $C3D $MOVLUNGIMG -threshold -Inf -950 1 0 $RESDIR/$nm2'' moving_aeroted_mask_resampled -multiply -o $RESDIR/severe_resampled.nii.gz
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/severe_resampled.nii.gz >  $RESDIR/res"-severe-Volume.txt"
 
 
