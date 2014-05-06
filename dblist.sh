@@ -2,20 +2,20 @@
 
 # dbroot='/mnt/data/PUBLIC/aibs1/Data/Input/DrewWarrenLungData/ATCases'
 # dbroot='/home/songgang/localdata/DrewWarrenLungData/ATCases'
-# dbroot='/home/songgang/project/EduardoNewData/data/input'
-dbroot='/home/songgang/project/EduardoNewData/data'
+dbroot='/home/songgang/project/EduardoNewData/data/input'
+# dbroot='/home/songgang/project/EduardoNewData/data'
 
 
 
-# datelist="
-# May_04_2014
-# "
-
-#dMay_04_2014(){
 datelist="
-output
+May_04_2014
 "
-doutput(){
+
+dMay_04_2014(){
+# datelist="
+# output
+# "
+# doutput(){
 imglist="
 N2I
 N2E
