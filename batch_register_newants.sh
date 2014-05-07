@@ -45,12 +45,12 @@ do
         echo image fix mov: $fixname $movname
 
         #FIXLUNGNAME=$fixname'_downsampled'
-        FIXLUNGNAME=$fixname'_down1p5mm'
+        FIXLUNGNAME=$fixname'_down1p5mm_pad10'
         FIXLUNGIMG=$RESROOT/$fixname/$FIXLUNGNAME'.nii.gz'
         FIXLUNGMASK=$RESROOT/$fixname/$FIXLUNGNAME'_lungmask.nii.gz'
 
         #MOVLUNGNAME=$movname'_downsampled'
-        MOVLUNGNAME=$movname'_down1p5mm'
+        MOVLUNGNAME=$movname'_down1p5mm_pad10'
         MOVLUNGIMG=$RESROOT/$movname/$MOVLUNGNAME'.nii.gz'
         MOVLUNGMASK=$RESROOT/$movname/$MOVLUNGNAME'_lungmask.nii.gz'
 
@@ -63,7 +63,7 @@ do
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
         #new ants, serial 4 not enough, increase to 7
-        echo qsub -pe serial 1 -S /bin/bash -N ${FIXLUNGNAME}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        echo qsub -pe serial 7 -S /bin/bash -N ${FIXLUNGNAME}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
