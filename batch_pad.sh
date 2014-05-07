@@ -54,22 +54,22 @@ do
         LUNGIMG=$RESDIR/$LUNGNAME'.nii.gz'               
         if [ ! -f $LUNGIMG ]; then echo "=====================" $LUNGIMG does not exist!; continue; fi
         qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungmask.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_lungmask_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungs.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_lungs_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_separate.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_separate_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_smooth.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_smooth_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_airways.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_airways_pad10.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungmask.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_lungmask.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungs.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_lungs.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_separate.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_separate.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_smooth.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_smooth.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_airways.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_airways.nii.gz'
 
 
         LUNGNAME=$myimg'_downsampled'
         LUNGIMG=$RESDIR/$LUNGNAME'.nii.gz'               
         if [ ! -f $LUNGIMG ]; then echo "=====================" $LUNGIMG does not exist!; continue; fi
         qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungmask.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_lungmask_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungs.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_lungs_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_separate.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_separate_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_smooth.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_smooth_pad10.nii.gz'
-        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_airways.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_airways_pad10.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungmask.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_lungmask.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_lungs.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_lungs.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_separate.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_separate.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_smooth.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_smooth.nii.gz'
+        qsub -S /bin/bash -N ${LUNGNAME}_pad -j y -wd $RESDIR pad.sh $RESDIR/$LUNGNAME'_airways.nii.gz' $PADVOX $RESDIR/$LUNGNAME'_pad10_airways.nii.gz'
 
         
     done
