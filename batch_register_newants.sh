@@ -63,7 +63,7 @@ do
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
         #new ants, serial 4 not enough, increase to 7
-        echo qsub -pe serial 7 -S /bin/bash -N ${FIXLUNGNAME}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        qsub -pe serial 7 -S /bin/bash -N ${FIXLUNGNAME}_newants_register -wd $RESDIR register_newants.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
