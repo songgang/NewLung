@@ -51,11 +51,11 @@ do
         echo ===========================================================
         echo image fix mov: $fixname $movname
 
-        FIXLUNGNAME=$fixname'_down1p5mm'
+        FIXLUNGNAME=$fixname'_down1p5mm_pad10'
         FIXLUNGIMG=$RESROOT/$fixname/$FIXLUNGNAME'.nii.gz'
         FIXLUNGMASK=$RESROOT/$fixname/$FIXLUNGNAME'_lungmask.nii.gz'
 
-        MOVLUNGNAME=$movname'_down1p5mm'
+        MOVLUNGNAME=$movname'_down1p5mm_pad10'
         MOVLUNGIMG=$RESROOT/$movname/$MOVLUNGNAME'.nii.gz'
         MOVLUNGMASK=$RESROOT/$movname/$MOVLUNGNAME'_lungmask.nii.gz'
 
@@ -68,7 +68,7 @@ do
 
         #old ants, 1mm resolution 32g * 25%=8g needs -pe serial 4
         # 1.5mm resolution try 2G
-        qsub -pe serial 1 -S /bin/bash -N ${fixname}_1p5mm_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
+        qsub -pe serial 2 -S /bin/bash -N ${FIXLUNGNAME}_register -wd $RESDIR register.sh $FIXLUNGIMG $FIXLUNGMASK $MOVLUNGIMG $MOVLUNGMASK $RESDIR
 
     done
 done
