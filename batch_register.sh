@@ -44,6 +44,7 @@ do
         local j
         let j=$i+1
         
+        # use exp: fix, insp: mov
         fixname=`awk "{print $"$j"}" <<< $imglist`
         movname=`awk "{print $"$i"}" <<< $imglist`
 
