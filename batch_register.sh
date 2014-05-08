@@ -51,11 +51,11 @@ do
         echo ===========================================================
         echo image fix mov: $fixname $movname
 
-        FIXLUNGNAME=$fixname'_down1p5mm_pad10'
+        FIXLUNGNAME=$fixname'_down1p5mm'
         FIXLUNGIMG=$RESROOT/$fixname/$FIXLUNGNAME'.nii.gz'
         FIXLUNGMASK=$RESROOT/$fixname/$FIXLUNGNAME'_lungmask.nii.gz'
 
-        MOVLUNGNAME=$movname'_down1p5mm_pad10'
+        MOVLUNGNAME=$movname'_down1p5mm'
         MOVLUNGIMG=$RESROOT/$movname/$MOVLUNGNAME'.nii.gz'
         MOVLUNGMASK=$RESROOT/$movname/$MOVLUNGNAME'_lungmask.nii.gz'
 
