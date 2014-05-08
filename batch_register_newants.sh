@@ -38,11 +38,14 @@ do
         local j
         let j=$i+1
 
-        fixname=`awk "{print $"$i"}" <<< $imglist`
-        movname=`awk "{print $"$j"}" <<< $imglist`
+        # use exp: fix, insp: mov
+        fixname=`awk "{print $"$j"}" <<< $imglist`
+        movname=`awk "{print $"$i"}" <<< $imglist`
 
         echo ===========================================================
         echo image fix mov: $fixname $movname
+
+        continue
 
         #FIXLUNGNAME=$fixname'_downsampled'
         #FIXLUNGNAME=$fixname'_down1p5mm_pad10'
