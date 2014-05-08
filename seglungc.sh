@@ -30,11 +30,11 @@ UTILITIESDIR=/home/songgang/project/tustison/Utilities/gccrel
 #UTILITIESDIR=/home/songgang/project/tustison/Utilities/gccrel_before_May_04_2014
 ANTSDIR=/home/songgang/project/ANTS/gccrel/bin
 
-# MYDO ${UTILITIESDIR}/ExtractLungs $TMPIMAGE $LUNGMASK 
-# MYDO ${UTILITIESDIR}/SegmentAirways $TMPIMAGE $LUNGMASK $AIRWAYMASK
-# MYDO ${UTILITIESDIR}/SeparateLungs $TMPIMAGE $AIRWAYMASK $SEPARATEMASK
-# MYDO ${UTILITIESDIR}/SmoothLungs $SEPARATEMASK $SMOOTHMASK 15
-# c3d $SMOOTHMASK -threshold 2 3 1 0 -o $RESDIR/${LUNGNAME}_lungmask.nii.gz
+MYDO ${UTILITIESDIR}/ExtractLungs $TMPIMAGE $LUNGMASK 
+MYDO ${UTILITIESDIR}/SegmentAirways $TMPIMAGE $LUNGMASK $AIRWAYMASK
+MYDO ${UTILITIESDIR}/SeparateLungs $TMPIMAGE $AIRWAYMASK $SEPARATEMASK
+MYDO ${UTILITIESDIR}/SmoothLungs $SEPARATEMASK $SMOOTHMASK 15
+c3d $SMOOTHMASK -threshold 2 3 1 0 -o $RESDIR/${LUNGNAME}_lungmask.nii.gz
 
 
 # copy header information as it seems that
