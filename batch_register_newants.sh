@@ -45,8 +45,6 @@ do
         echo ===========================================================
         echo image fix mov: $fixname $movname
 
-        continue
-
         #FIXLUNGNAME=$fixname'_downsampled'
         #FIXLUNGNAME=$fixname'_down1p5mm_pad10'
         FIXLUNGNAME=$fixname'_down1p5mm'
