@@ -33,7 +33,8 @@ do
         echo image: $myimg
      
         
-        LUNGIMG=$dbroot/$mydate/$myimg/$myimg'.nii.gz'
+        #LUNGIMG=$dbroot/$mydate/$myimg/$myimg'.nii.gz'
+        LUNGIMG=/home/songgang/project/EduardoNewData/data/input/May_04_2014/$myimg/$myimg'.nii.gz'
         RESDIR=$RESROOT/$myimg
         RESIMG=$RESDIR/$myimg'_down1p5mm.nii.gz'
         
