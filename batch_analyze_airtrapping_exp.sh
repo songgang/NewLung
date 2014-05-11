@@ -53,10 +53,14 @@ do
 
         #FIXLUNGNAME=$fixname'_down1p5mm'
         FIXLUNGNAME=$fixname'_downsampled'
+        FIXLUNGIMG=$RESROOT/$fixname/$FIXLUNGNAME'.nii.gz'
 
         #MOVLUNGNAME=$movname'_down1p5mm'
         MOVLUNGNAME=$movname'_downsampled'
+        MOVLUNGIMG=$RESROOT/$movname/$MOVLUNGNAME'.nii.gz'
         
+        # RESDIR has all warped files
+        # the output *.txt will be in $RESDIR
         RESDIR=$RESROOT/$fixname
         casename="oldants"
 

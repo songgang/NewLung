@@ -47,7 +47,7 @@
 
 IMDILATE=/home/songgang/pkg/bin/imdilate
 ANTSDIR=/home/songgang/project/ANTS/bin64
-BINDIR=/home/songgang/project/tustison/Utilities/bin64
+BINDIR=/home/songgang/project/tustison/Utilities/gccrel
 C3D=/home/songgang/pkg/bin/c3d
 MEDFILTER=/home/songgang/pkg/bin/MedianFilter
 
@@ -64,20 +64,11 @@ function checkfile
 }
 
 MYDO(){
-# echo "-------------------------------------------------"
-# echo $*
-# echo "-------------------------------------------------"
+ # echo "-------------------------------------------------"
+ # echo $*
+ # echo "-------------------------------------------------"
  $*
-# echo ">>>>>>>>> DONE <<<<<<<<<<<<<<<<"
-}
-
-
-function myecho
-{
-    echo
-    echo $*
-    # time $1
-    $*
+ # echo ">>>>>>>>> DONE <<<<<<<<<<<<<<<<"
 }
 
 tic(){
@@ -105,7 +96,7 @@ nm2dir=`dirname $MOVLUNGIMG`
 
 checkfile $FIXLUNGIMG
 checkfile $MOVLUNGIMG
-checkfile $RESDIR/$nm'_warped.nii.gz'
+checkfile $nm'_warped.nii.gz'
 checkfile $nm1dir/$nm1'_smooth.nii.gz'
 checkfile $nm2dir/$nm2'_smooth.nii.gz'
 checkfile $nm1dir/$nm1'_lungmask.nii.gz'
@@ -119,11 +110,11 @@ tic
 
 
 # 0 .get warped airway mask in the moving domain
-MYDO $C3D $nm1dir/$nm1'_smooth.nii.gz' -threshold 4 4 1 0 -o $nm1dir/$nm1'_roughairwaymask.gz'
-MYDO $IMDILATE $nm1dir/$nm1'_roughairwaysmask.nii.gz' 2 $nm1/$nm1'_roughairwaysmask_dilated.nii.gz'
+MYDO $C3D $nm1dir/$nm1'_smooth.nii.gz' -threshold 4 4 1 0 -o $nm1dir/$nm1'_roughairwaysmask.nii.gz'
+MYDO $IMDILATE $nm1dir/$nm1'_roughairwaysmask.nii.gz' 2 $nm1dir/$nm1'_roughairwaysmask_dilated.nii.gz'
 
-MYDO $C3D $nm2dir/$nm2'_smooth.nii.gz' -threshold 4 4 1 0 -o $nm2dir/$nm2'_roughairwaymask.gz'
-MYDO $IMDILATE $nm2dir/$nm2'_roughairwaysmask.nii.gz' 2 $nm2/$nm2'_roughairwaysmask_dilated.nii.gz'
+MYDO $C3D $nm2dir/$nm2'_smooth.nii.gz' -threshold 4 4 1 0 -o $nm2dir/$nm2'_roughairwaysmask.nii.gz'
+MYDO $IMDILATE $nm2dir/$nm2'_roughairwaysmask.nii.gz' 2 $nm2dir/$nm2'_roughairwaysmask_dilated.nii.gz'
 
 
 
@@ -149,15 +140,15 @@ MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm1dir/$nm1'_severemask.nii.gz' >
 
 #   recompute: 2.1. emphysema area or non-emphysema with severe air trapping ( threshold < -950 ) in inspiration
 INSPEMPHYSEMATHRES=-950
-MYDO $C3D $MOVLUNGIMG -threshold -Inf $INSPEMPHYSEMATHRES 1 0 $nm2dir/$nm2' _aerotedmask.nii.gz' -multiply -o $nm2dir/$nm2'_severemask.nii.gz'
+MYDO $C3D $MOVLUNGIMG -threshold -Inf $INSPEMPHYSEMATHRES 1 0 $nm2dir/$nm2'_aerotedmask.nii.gz' -multiply -o $nm2dir/$nm2'_severemask.nii.gz'
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm2dir/$nm2'_severemask.nii.gz' >  $RESDIR/res"-insp-severe-Volume.txt"
 
 # 5. compute the differencing image of warped inspiration to expiration
-MYDO $C3D $RESDIR/$nm'_warped.nii.gz' -scale -1 $FIXLUNGIMG -add -o $RESDIR/$nm'_diff.nii.gz'
-MYDO $MEDFILTER $RESDIR/$nm'_diff.nii.gz' $RESDIR/$nm'_diff_median.nii.gz' 2.0
+MYDO $C3D $nm'_warped.nii.gz' -scale -1 $FIXLUNGIMG -add -o $nm'_diff.nii.gz'
+MYDO $MEDFILTER $nm'_diff.nii.gz' $nm'_diff_median.nii.gz' 2.0
 
 # 6.0 compute the non severe region (dynamic AT should be inside non severe)
-MYDO $C3D $nm1dir/$nm1'_aerotedmask.nii.gz' $nm1dir/$nm'_severemask.nii.gz' -scale -1 -add -o $nm1dir/$nm1'_nonseveremask.nii.gz'
+MYDO $C3D $nm1dir/$nm1'_aerotedmask.nii.gz' $nm1dir/$nm1'_severemask.nii.gz' -scale -1 -add -o $nm1dir/$nm1'_nonseveremask.nii.gz'
 
 
 #   6. dynamic air trapping ( try various thrsholds on the differencing image)
@@ -168,8 +159,8 @@ for ((i=0; i < num_threshold; i++))
 do
     T=${dynamic_threshold_list[i]}
     
-    MYDO $C3D $RESDIR/$nm'_diff_median.nii.gz' -threshold 0 $T 1 0 $nm1dir/$nm1'_nonseveremask.nii.gz' -multiply -o $RESDIR/$nm"_moving_dynamic_$T.nii.gz"
-    MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $RESDIR/$nm"_moving_dynamic_$T.nii.gz" > $RESDIR/res-moving-dynamic"-"$T"-Median-Volume.txt" 
+    MYDO $C3D $nm'_diff_median.nii.gz' -threshold 0 $T 1 0 $nm1dir/$nm1'_nonseveremask.nii.gz' -multiply -o $nm"_moving_dynamic_$T.nii.gz"
+    MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm"_moving_dynamic_$T.nii.gz" > $RESDIR/res-moving-dynamic"-"$T"-Median-Volume.txt" 
 done 	
 
 
