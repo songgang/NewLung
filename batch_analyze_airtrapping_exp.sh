@@ -69,7 +69,7 @@ do
         
         make_metric_dir $RESDIR
 
-        echo qsub -pe serial 1 -S /bin/bash -j y -N ${FIXLUNGNAME}_airtrapping -wd $RESDIR analyze_airtrapping_exp.sh $FIXLUNGIMG $MOVLUNGIMG $RESDIR $casename
+        qsub -pe serial 1 -S /bin/bash -j y -N ${FIXLUNGNAME}_airtrapping -wd $RESDIR analyze_airtrapping_exp.sh $FIXLUNGIMG $MOVLUNGIMG $RESDIR $casename
 
     done
 done
