@@ -12,10 +12,6 @@ May_04_2014
 "
 
 dMay_04_2014(){
-# datelist="
-# output
-# "
-# doutput(){
 imglist="
 N2I
 N2E
