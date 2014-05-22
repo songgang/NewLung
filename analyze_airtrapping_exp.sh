@@ -143,7 +143,7 @@ INSPEMPHYSEMATHRES=-950
 MYDO $C3D $MOVLUNGIMG -threshold -Inf $INSPEMPHYSEMATHRES 1 0 $nm2dir/$nm2'_aerotedmask.nii.gz' -multiply -o $nm2dir/$nm2'_severemask.nii.gz'
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm2dir/$nm2'_severemask.nii.gz' >  $RESDIR/res"-insp-severe-Volume.txt"
 
-# 5. compute the differencing image of warped inspiration to expiration
+# 5. compute the differencing image of warped inspiration to expiration: -1*insp + exp
 MYDO $C3D $nm'_warped.nii.gz' -scale -1 $FIXLUNGIMG -add -o $nm'_diff.nii.gz'
 MYDO $MEDFILTER $nm'_diff.nii.gz' $nm'_diff_median.nii.gz' 2.0
 
