@@ -159,8 +159,8 @@ for ((i=0; i < num_threshold; i++))
 do
     T=${dynamic_threshold_list[i]}
     
-    MYDO $C3D $nm'_diff_median.nii.gz' -threshold 0 $T 1 0 $nm1dir/$nm1'_nonseveremask.nii.gz' -multiply -o $nm"_moving_dynamic_$T.nii.gz"
-    MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm"_moving_dynamic_$T.nii.gz" > $RESDIR/res-moving-dynamic"-"$T"-Median-Volume.txt" 
+    MYDO $C3D $nm'_diff_median.nii.gz' -threshold 0 $T 1 0 $nm1dir/$nm1'_nonseveremask.nii.gz' -multiply -o $nm"_exp_dynamic_$T.nii.gz"
+    MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm"_moving_dynamic_$T.nii.gz" > $RESDIR/res-exp-dynamic"-"$T"-Median-Volume.txt" 
 done 	
 
 
