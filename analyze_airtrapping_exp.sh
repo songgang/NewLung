@@ -128,7 +128,7 @@ MYDO $C3D $MOVLUNGIMG -threshold $VESSELTHRES Inf 1 0 $nm2dir/$nm2'_lungmask.nii
 MYDO $IMDILATE $nm2dir/$nm2'_vesselmask.nii.gz' $VESSELDILATERADIUS $nm2dir/$nm2'_vesselmask_dilated.nii.gz'
 
 # 1. get aerated area in expiration: exclude airway and vessels
-AEROTHRES=-500; #below
+AEROTHRES=-300; #below
 MYDO $C3D $nm1dir/$nm1'_lungmask.nii.gz' $nm1dir/$nm1'_roughairwaysmask_dilated.nii.gz' -scale -1 -shift 1 -multiply $nm1dir/$nm1'_vesselmask_dilated.nii.gz' -scale -1 -shift 1 -multiply $FIXLUNGIMG -threshold -Inf $AEROTHRES 1 0 -multiply -o $nm1dir/$nm1'_aerotedmask.nii.gz'
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm1dir/$nm1'_aerotedmask.nii.gz' > $RESDIR/res"-exp-aeroted-Volume.txt"
 
@@ -136,7 +136,7 @@ MYDO $C3D $nm2dir/$nm2'_lungmask.nii.gz' $nm2dir/$nm2'_roughairwaysmask_dilated.
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm2dir/$nm2'_aerotedmask.nii.gz' > $RESDIR/res"-insp-aeroted-Volume.txt"
 
 #   2. emphysema area or non-emphysema with severe air trapping ( threshold < -850 ) in expiration
-EXPEMPHYSEMATHRES=-850; #below
+EXPEMPHYSEMATHRES=-856; #below
 MYDO $C3D $FIXLUNGIMG -threshold -Inf $EXPEMPHYSEMATHRES 1 0 $nm1dir/$nm1'_aerotedmask.nii.gz' -multiply -o $nm1dir/$nm1'_severemask.nii.gz'
 MYDO $BINDIR/CalculateVolumeFromBinaryImage 3 $nm1dir/$nm1'_severemask.nii.gz' >  $RESDIR/res"-exp-severe-Volume.txt"
 
