@@ -119,10 +119,11 @@ MYDO $IMDILATE $nm2dir/$nm2'_roughairwaysmask.nii.gz' 2 $nm2dir/$nm2'_roughairwa
 
 
 # 1. generate vessel masks
-MYDO $C3D $FIXLUNGIMG -threshold -300 Inf 1 0 $nm1dir/$nm1'_lungmask.nii.gz' -multiply -o $nm1dir/$nm1'_vesselmask.nii.gz'
+VESSELTHRES=-100
+MYDO $C3D $FIXLUNGIMG -threshold $VESSELTHRES Inf 1 0 $nm1dir/$nm1'_lungmask.nii.gz' -multiply -o $nm1dir/$nm1'_vesselmask.nii.gz'
 MYDO $IMDILATE $nm1dir/$nm1'_vesselmask.nii.gz' 2 $nm1dir/$nm1'_vesselmask_dilated.nii.gz'
 
-MYDO $C3D $MOVLUNGIMG -threshold -300 Inf 1 0 $nm2dir/$nm2'_lungmask.nii.gz' -multiply -o $nm2dir/$nm2'_vesselmask.nii.gz'
+MYDO $C3D $MOVLUNGIMG -threshold $VESSELTHRES Inf 1 0 $nm2dir/$nm2'_lungmask.nii.gz' -multiply -o $nm2dir/$nm2'_vesselmask.nii.gz'
 MYDO $IMDILATE $nm2dir/$nm2'_vesselmask.nii.gz' 2 $nm2dir/$nm2'_vesselmask_dilated.nii.gz'
 
 # 1. get aerated area in expiration: exclude airway and vessels
