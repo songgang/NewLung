@@ -10,7 +10,7 @@ DCMINI=/home/songgang/project/EduardoNewData/script/Edudcm2nii.ini
 #nii direcotry
 # NIIROOT/N2E
 
-DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/errata-N8
+DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/errata-N62
 NIIROOT=/home/songgang/project/EduardoNewData/data/input/nii
 
 for dcmA in `ls -d $DICOMROOT/download*`
