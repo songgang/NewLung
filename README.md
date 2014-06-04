@@ -9,11 +9,14 @@ batch_dcm2nii.sh
 2. resample to 1mm
 batch_resample.sh
 
-3. register
+3. segment lung masks
+batch_seglungc.sh
+
+4. register
 batch_register.sh
 
-4. analyze volume of different thresholding
+5. analyze volume of different thresholding
 batch_analyze_airtrapping_exp.sh
 
-5. compute correlation
+6. compute correlation
 in matlab...
