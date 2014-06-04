@@ -48,7 +48,9 @@ done
 
 # to obtain $dbroot $mydate $myimg 
 # . dblist_vol.sh
-.dblist_errata.sh
+# .dblist_errata.sh
+# example of $1 : dblist_vol.sh 
+. $1
 
 RESROOT=/home/songgang/project/EduardoNewData/data/output
 CURDIR=`pwd`
