@@ -39,8 +39,9 @@ do
         let j=$i+1
 
         # use exp: fix, insp: mov
-        fixname=`awk "{print $"$j"}" <<< $imglist`
-        movname=`awk "{print $"$i"}" <<< $imglist`
+        # in current dblist.sh EXP is ahead of INSP, as natural sort order
+        fixname=`awk "{print $"$i"}" <<< $imglist`
+        movname=`awk "{print $"$j"}" <<< $imglist`
 
         echo ===========================================================
         echo image fix mov: $fixname $movname
