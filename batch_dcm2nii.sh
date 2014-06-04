@@ -2,16 +2,15 @@
 
 #batch to convert dicom to nii.gz
 
-
 DCM2NII=/home/songgang/pkg/mricron/dcm2nii
 DCMINI=/home/songgang/project/EduardoNewData/script/Edudcm2nii.ini
 
 #dicom directory
 # $DICOMROOT/randname/CT_N2E/randname/randname/
 #nii direcotry
-# NIIROOT/N2/N2E
+# NIIROOT/N2E
 
-DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/pg7
+DICOMROOT=/home/songgang/project/EduardoNewData/data/input/DICOM/errata-N8
 NIIROOT=/home/songgang/project/EduardoNewData/data/input/nii
 
 for dcmA in `ls -d $DICOMROOT/download*`
@@ -39,7 +38,8 @@ do
 
 				if (( $dcmcnt > 0 )); then
 
-					niidir=$NIIROOT/$patient/$imgname
+					# niidir=$NIIROOT/$patient/$imgname
+					niidir=$NIIROOT/$imgname
 					echo target niidir: $niidir
 					if [ ! -d $niidir ]; then 
 						mkdir -p $niidir
