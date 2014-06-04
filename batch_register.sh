@@ -45,6 +45,7 @@ do
         let j=$i+1
         
         # use exp: fix, insp: mov
+        # in current dblist.sh EXP is ahead of INSP, as natural sort order
         fixname=`awk "{print $"$i"}" <<< $imglist`
         movname=`awk "{print $"$j"}" <<< $imglist`
 
@@ -77,7 +78,8 @@ done
 }
 
 # to obtain $dbroot $mydate $myimg 
-. dblist.sh
+# . dblist.sh
+. $1
 
 RESROOT=/home/songgang/project/EduardoNewData/data/output
 CURDIR=`pwd`

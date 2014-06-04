@@ -74,7 +74,8 @@ done
 }
 
 # to obtain $dbroot $mydate $myimg 
-. dblist.sh
+# . dblist.sh
+. $1
 
 RESROOT=/home/songgang/project/EduardoNewData/data/output
 CURDIR=`pwd`
